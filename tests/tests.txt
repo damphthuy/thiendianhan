@@ -1,0 +1,199 @@
+# Tests
+
+## Test 0 - Giải mã giấc mơ bằng AI [sanity]
+Viewport: desktop
+Covers: Giải mã giấc mơ, POST /api/dreams/analyze, AI phân tích giấc mơ, tâm lý học hiện đại, neuroscience, Jung, Freud, tách lớp bằng chứng, validation giấc mơ ngắn
+Description: Kiểm tra người dùng có thể kể một giấc mơ và nhận phân tích có cấu trúc, không biến biểu tượng thành tiên tri hoặc chẩn đoán.
+
+Steps:
+1. Mở "Giải mã giấc mơ"
+2. Nhập "Tôi đi trong một ga tàu rất rộng, liên tục tìm một chiếc vali màu đỏ nhưng không thấy. Tôi lo mình sẽ lỡ chuyến tàu và tỉnh dậy khi nghe tiếng còi." rồi bấm "PHÂN TÍCH GIẤC MƠ"
+3. Kiểm tra kết quả có Tổng quan, chi tiết nổi bật, cảm xúc, Tâm lý học, Neuroscience, Góc nhìn Jung, Góc nhìn Freud và Tổng hợp thận trọng
+
+Expected: AI trả phân tích chi tiết bằng tiếng Việt dựa trên chính nội dung đã nhập; có Mạch giấc mơ, Động lực cảm xúc, Biểu tượng trong ngữ cảnh, các lớp Tâm lý học/Neuroscience/Jung/Freud, Tổng hợp và Mức chắc chắn. Các trường phái được tách rõ, không khẳng định tiên tri, chẩn đoán hay từ điển biểu tượng tuyệt đối.
+
+## Test 0b - Chặn giấc mơ quá ngắn
+Viewport: mobile
+Covers: validation giấc mơ ngắn, mobile dream form
+Description: Kiểm tra form không gửi nội dung quá ngắn lên AI.
+
+Steps:
+1. Mở "Giải mã giấc mơ" trên mobile
+2. Nhập "Mơ thấy mèo"
+3. Bấm "PHÂN TÍCH GIẤC MƠ"
+
+Expected: Hiển thị yêu cầu kể chi tiết thêm và không xuất kết quả AI.
+
+## Test 0c - Luận giải chuyên sâu dùng dữ liệu engine
+Viewport: desktop
+Covers: POST /api/interpret, luận giải chuyên sâu, rule trước AI sau, Tử Vi, Bát Tự, Kinh Dịch, Kỳ Môn, Phong thủy ngày, Bát Trạch, Chiêm tinh, Huyền Thiên Tinh Bàn, Thần số học, Bản đồ sao, giới hạn dữ liệu
+Description: Kiểm tra lớp luận giải dùng snapshot kết quả đã tính và không tự lấp các rule đang khóa.
+
+Steps:
+1. Mở một module đã có kết quả tính toán, ví dụ Bát Tự, nhập dữ liệu TEST-FEMALE-01 và bấm tính
+2. Bấm "LUẬN GIẢI THẬT KỸ"
+3. Kiểm tra có Tổng luận, Điểm nổi bật, Điểm cần lưu ý, các miền phân tích, Thời điểm/diễn biến, Ứng dụng thực tế và Giới hạn dữ liệu
+4. Kiểm tra phần giới hạn không tự kết luận Cường/Nhược hoặc Dụng/Hỷ/Kỵ nếu màn hình vẫn ghi các rule đó chưa khóa
+
+Expected: Kết quả luận dài, cụ thể và bám dữ liệu đang hiển thị; AI không tự thêm phép tính/rule bị khóa và luôn nêu giới hạn dữ liệu.
+
+## Test 1 - Dashboard mở Tử Vi với form trống
+Viewport: desktop
+Covers: app shell, dashboard navigation, Tử Vi không dùng dữ liệu mẫu, nhập Ngày/Tháng/Năm và giờ 24h, lập lá số
+Description: Kiểm tra app mở bằng dashboard, không tự nạp người thật và dùng định dạng ngày giờ Việt Nam cố định.
+
+Steps:
+1. Mở ứng dụng và bấm thẻ "Lập lá số Tử Vi"
+2. Nhập ngày sinh theo DD/MM/YYYY và giờ sinh theo HH:mm 24 giờ
+3. Nhập các dữ liệu còn lại rồi bấm "LẬP LÁ SỐ"
+
+Expected: Không có dữ liệu người thật mặc định; ngày hiển thị theo Ngày/Tháng/Năm; giờ dùng 00:00–23:59 không có AM/PM; sau khi nhập hợp lệ bàn 12 cung được dựng.
+
+## Test 2 - Phong thủy ngày và corpus Phong Thủy Trung Quốc
+Viewport: desktop
+Covers: nhập ngày, định dạng Ngày/Tháng/Năm, Can Chi ngày, nên tránh, phương vị, Bát Trạch, nguồn Phong Thủy Trung Quốc, Việt hóa tên sách, tách trường phái
+Description: Kiểm tra lịch ngày giữ chuẩn nhập Việt Nam và Bát Trạch hiển thị kho nguồn Phong Thủy Trung Quốc mà chưa tự trộn rule.
+
+Steps:
+1. Mở "Phong thủy ngày", nhập 17/09/2026 và bấm "Xem ngày"
+2. Mở "Bát Trạch" và cuộn tới "Nguồn Phong Thủy Trung Quốc"
+3. Kiểm tra có Bát Trạch Minh Kính / 《八宅明镜》, Dương Trạch Tam Yếu / 《阳宅三要》, Hám Long Kinh / 《撼龙经》, Địa Lý Ngũ Quyết / 《地理五诀》 và các nhóm trường phái
+
+Expected: Phong thủy ngày hiển thị đúng 17/09/2026 theo Ngày/Tháng/Năm; giao diện Bát Trạch không hiển thị danh sách nguồn, liên kết nguồn hoặc Hán tự; các trường phái vẫn được xử lý tách biệt trong logic và phần chưa đủ công thức kiểm chứng phải dừng thay vì tự hợp nhất.
+
+## Test 3 - Kinh Dịch tách đúng phương pháp và dựng đủ Quẻ chủ/Hỗ/Biến
+Viewport: desktop
+Covers: Kinh Dịch, Serial tiền 8 số, ngày giờ động tâm, Mai Hoa theo thời gian, giả lập Cỏ thi, quẻ số mệnh, DD/MM/YYYY, giờ 24h, quẻ chủ, quẻ hỗ, quẻ biến, Can Chi, Tiết khí, tùy chọn dùng tiết khí, Nguyệt lệnh theo tháng âm lịch, Nhật thần, Nguyệt lệnh, Họ quẻ, Lục Hào, Nạp Giáp, Thế Ứng, Lục Thân, Phục Thần, Lục Thú, Tuần Không, Vượng Tướng Hưu Tù Tử, Quái thân, Lộc Mã Quý Đào, báo cáo quẻ một ảnh, tải PNG
+Description: Kiểm tra module Kinh Dịch bám cấu trúc ảnh tham chiếu: phiếu quẻ full-width, bảng Lục Hào không có thanh cuộn ngang, hai nửa quẻ chủ/quẻ biến nhìn thấy cùng lúc và tiêu đề dùng Triệu/tượng như ảnh mẫu.
+
+Steps:
+1. Mở "Kinh Dịch", xác nhận Ngày lập quẻ / động tâm và Giờ động tâm đã được điền sẵn theo thời gian hiện tại của thiết bị; sau đó chọn "Serial tiền" và nhập việc cần xem, serial AB20915929
+2. Chọn "Mai Hoa thời gian", nhập việc cần xem, chỉnh thời điểm thành 18/09/2026 và 15:36 rồi bấm "LẬP QUẺ"; kiểm tra phiếu quẻ ra Hỏa Lôi Phệ Hạp / Thủy Sơn Kiển / Chấn Vi Lôi và hiện Triệu Cơ Nhân Ngộ Thực / Vũ Tuyết Tải Đồ / Kim Chung Dạ Tràng
+3. Lập một quẻ có Quẻ biến Sơn Thủy Mông và xác nhận hiển thị "Triệu: Tiểu Quỷ Thâu Tiền", tuyệt đối không còn chữ "chưa khóa nguồn"; sau đó tắt "Dùng tiết khí để định Nguyệt lệnh" và bấm "TẢI ẢNH QUẺ PNG"
+
+Expected: Ngày/giờ hiện tại được điền sẵn theo DD/MM/YYYY và HH:mm 24h; tùy chọn tiết khí hoạt động như mô tả. Phiếu quẻ nằm full-width; phần Lục Hào hiển thị trọn 11 cột và đủ hai nửa chủ/biến mà không xuất hiện thanh cuộn ngang; cả 64 quẻ đều có Triệu/tượng đã đăng ký, trong đó Sơn Thủy Mông = Tiểu Quỷ Thâu Tiền, và giao diện không bao giờ hiện placeholder nội bộ "chưa khóa nguồn"; PNG vẫn xuất toàn bộ phiếu.
+
+## Test 4 - Bát Tự dùng ngày Việt Nam, giờ 24h và nguồn Trung Quốc đã Việt hóa
+Viewport: desktop
+Covers: Bát Tự, Tứ Trụ, Dương/Âm lịch, tháng nhuận, DD/MM/YYYY, giờ 24h, Nhật chủ, Nguyệt lệnh, khí mùa, Tuần không, Thập thần, tàng can, 12 Trường Sinh, Nạp âm, hợp xung hại phá tự hình, thống kê ngũ hành âm dương, nguồn Bát Tự Trung Quốc, Việt hóa tên sách, phân lớp trường phái
+Description: Kiểm tra Bát Tự giữ logic Tứ Trụ hiện có và hiển thị corpus Trung Quốc bằng tên Việt hóa kèm tên Hán văn.
+
+Steps:
+1. Mở "Bát Tự"
+2. Nhập ngày 23/01/2000, giờ 22:00 và bấm "LẬP BÁT TỰ"; kiểm tra bảng 4 trụ có Thập thần, Thiên can, Địa chi, Tàng can + Thập thần tàng, Trường Sinh và Nạp âm; kiểm tra Nguyệt lệnh, khí mùa, Tuần không và khối tương tác địa chi
+3. Kiểm tra ba lớp thống kê ngũ hành/âm dương và khung Vượng suy → Cách cục → Điều hậu → Dụng/Hỷ/Kỵ; sau đó cuộn tới nguồn Trung Quốc và kiểm tra Tử Bình Chân Thuyên, Trích Thiên Tủy Xiển Vi, Cùng Thông Bảo Giám
+
+Expected: Ngày luôn nhập theo Ngày/Tháng/Năm, giờ theo 24 giờ; lá Bát Tự trình bày đủ 4 trụ theo dạng bảng chuyên dụng với Thập thần, can chi, tàng can, Trường Sinh, Nạp âm, Nguyệt lệnh, khí mùa, Tuần không và tương tác địa chi; ngũ hành nổi/tàng/toàn cục vẫn tách riêng. Giao diện không lấy số lượng ngũ hành để tự phán cường nhược, không tự bịa Dụng/Hỷ/Kỵ, không hiển thị Hán tự, danh sách sách hay liên kết nguồn; phần chưa đủ công thức kiểm chứng phải dừng kết luận.
+
+## Test 5 - Huyền Thiên Tinh Bàn, Kỳ Môn, Chiêm tinh, Thần số học và Bản đồ sao hoạt động
+Viewport: mobile
+Covers: Huyền Thiên Tinh Bàn, Chiêm tinh, vị trí hành tinh, Astronomy Engine, tọa độ thủ công, hướng nhìn, chòm sao phía trước, phương vị, độ cao, decan hoàng đạo 36 phần, Kỳ Môn Độn Giáp, Âm Dương Độn, Tam nguyên, 18 cục, Tam kỳ Lục nghi, Cửu tinh Bát môn bản vị, Tuần thủ, Trực Phù, Trực Sử, Ngũ bất ngộ thời, nguồn Kỳ Môn Trung Quốc, Thần số học Pythagoras, Bản đồ sao, DD/MM/YYYY, giờ 24h, múi giờ UTC, vòng hoàng đạo, kho nguồn giấc mơ, kho nguồn tâm lý học, tách trường phái lịch sử và bằng chứng hiện đại
+Description: Kiểm tra các module chiêm tinh chạy bằng dữ liệu thật; La bàn trời vẫn test được khi QA không cấp GPS/cảm biến bằng tọa độ và hướng thủ công.
+
+Steps:
+1. Mở "Huyền Thiên Bàn", xác nhận tiêu đề "Huyền Thiên Tinh Bàn", nhập vĩ độ 21.0285, kinh độ 105.8542, bấm "DÙNG TỌA ĐỘ NÀY", đặt hướng 90° và kiểm tra vùng trời/chòm sao/thiên thể/Decan
+2. Mở "Kỳ Môn Độn Giáp", nhập 18/09/2026 22:00, bấm "LẬP KỲ MÔN"; kiểm tra có Tiết khí, Âm/Dương Độn, Tam nguyên, cục, Tuần thủ, Trực Phù, Trực Sử, Ngũ bất ngộ thời và bàn 9 cung; cuộn xuống kiểm tra 5 nguồn Trung Quốc
+3. Mở "Chiêm tinh" tính vị trí hành tinh; mở "Thần số học" tính TEST USER 23/01/2000; mở "Bản đồ sao" với 23/01/2000 22:00 +07:00; sau đó mở "Quản trị" và kiểm tra kho "Giấc mơ & Tâm lý học" có Freud, Jung, Hobson, Domhoff, William James và Beck, đồng thời có cảnh báo tách nguồn lịch sử khỏi bằng chứng hiện đại
+
+Expected: Huyền Thiên Tinh Bàn nhận tọa độ thật/thủ công và tính vùng trời như trước. Kỳ Môn xác định cục bằng tiết khí + Tam nguyên, dựng địa bàn Tam kỳ Lục nghi, hiển thị Cửu tinh/Bát môn bản vị, Tuần thủ → Trực Phù/Trực Sử và cảnh báo Ngũ bất ngộ thời theo công thức đã kiểm chứng; giao diện không hiển thị Hán tự, danh sách sách hoặc link nguồn và nói rõ phần chưa đủ công thức không được giả lập. Chiêm tinh, Thần số học và Bản đồ sao vẫn hoạt động; mọi giờ dùng 24h và ngày dùng DD/MM/YYYY.
+
+## Test 6 - Free được tính nhưng không được luận giải
+Viewport: desktop
+Covers: đăng nhập, ID web, role Free, Tử Vi free, Kinh Dịch free, POST /api/me, POST /api/interpret authorization, server-side entitlement
+Description: Kiểm tra tài khoản mới mặc định là Free, vẫn lập được lá số/quẻ nhưng backend chặn luận giải.
+Steps:
+1. Đăng nhập bằng một tài khoản QA mới và kiểm tra thanh trên hiển thị FREE cùng ID web
+2. Mở Tử Vi, nhập dữ liệu TEST-FREE-01 và lập lá số; sau đó mở Kinh Dịch và lập một quẻ
+3. Tại Tử Vi bấm khu vực luận giải
+Expected: Lá số và quẻ vẫn được lập; phần luận giải hiển thị khóa/gói hiện tại chưa có quyền và không trả nội dung AI.
+
+## Test 7 - Bảng giá và phân quyền gói
+Viewport: mobile
+Covers: bảng giá, Nhân Hòa, Nhật Vận, Địa Lợi, Thiên Thời, Song Mệnh, Toàn Diện, gói cao cấp, khóa theo quyền ID
+Description: Kiểm tra bảng giá hiển thị đúng cấu trúc và giá người dùng cung cấp.
+Steps:
+1. Mở Gói dịch vụ
+2. Kiểm tra bốn gói đơn lẻ và ba gói combo
+3. Kiểm tra khối ý nghĩa cốt lõi
+Expected: Hiển thị 299.000đ, 499.000đ, 799.000đ, 899.000đ, 1.290.000đ, 1.690.000đ và 2.490.000đ mỗi tháng; Free ghi rõ chỉ dùng công cụ tính, không gồm luận giải AI. Mỗi gói hiển thị rule riêng; Song Mệnh có rule đối chiếu Tử Vi + Bát Tự, Toàn Diện chỉ gồm bốn hệ ghi trong bảng, gói 2.490.000đ mới mở toàn bộ rule hiện có; Admin là quyền toàn bộ nhưng không phải một gói khách hàng.
+
+## Test 9 - Vấn Tâm 32 lá đúng quy trình
+Viewport: desktop
+Covers: Vấn Tâm, bộ 32 lá 7 đến A, Nam 7 Nữ 9, ngày âm, chia 7 lá bàn + 1 lá mồi, 4 lá mồi, bàn 28 ô, mồi 8, chuỗi cùng chất theo hạng, đường xoắn 1 đến 28, dừng lá 7 thứ tư, danh sách lá chưa lật
+Description: Kiểm tra Vấn Tâm dùng đúng quy trình thantaixemboi thay vì cho người dùng lật tự do.
+Steps:
+1. Mở Vấn Tâm, chọn ngày âm trước mùng 10 và Nam; xác nhận số lần tráo là 7, sau đó đổi Nữ và xác nhận là 9
+2. Nhập câu hỏi TEST-VAN-TAM-01, bấm TRẢI BÀI MỚI và kiểm tra có đúng 4 lá mồi + 28 ô bàn
+3. Bấm CHẠY TRẢI BÀI; kiểm tra 4 lá mồi được xử lý trước, mồi 8 nếu có đi vào ô 8 cùng chất rồi theo hạng thực tế khi còn cùng chất, sau đó mới chạy đường xoắn 1→28 và bỏ qua ô đã mở
+4. Kiểm tra trải dừng khi đủ lá 7 thứ tư và mục kết quả liệt kê từng quân còn chưa lật cùng vị trí của nó
+Expected: Không có nút lật tự do/lật toàn bộ. Trước mùng 10 âm Nam tráo 7 lần, Nữ 9 lần; từ mùng 10 trở đi số lần tráo bằng ngày âm. Bài được chia 7 bàn + 1 mồi lặp 4 lần, xử lý mồi trước rồi đường xoắn, dừng ở lá 7 thứ tư và liệt kê chính xác từng lá còn chưa lật.
+
+## Test 8 - Root Admin được toàn quyền
+Viewport: desktop
+Covers: root admin ID, role Admin, toàn bộ entitlement, khu Quản trị
+Description: Kiểm tra ID Admin gốc do chủ sở hữu chỉ định được backend nâng quyền bền vững.
+Steps:
+1. Đăng nhập bằng tài khoản chủ sở hữu có ID web HH-2C482676DD
+2. Tải lại trang và kiểm tra thanh tài khoản
+3. Mở Quản trị và một module có luận giải
+Expected: Thanh tài khoản hiển thị ADMIN · HH-2C482676DD; mục Quản trị xuất hiện; tài khoản có toàn bộ entitlement và không bị khóa bởi gói khách hàng.
+
+## Test 9 - Admin quản lý quyền ID
+Viewport: desktop
+Covers: GET /api/admin/access, PUT /api/admin/access, cấp gói VIP, đổi gói, khóa mở tài khoản, ngày hết hạn, role boundary
+Description: Root Admin có giao diện quản lý ID thật thay vì chỉ xem Rule & Knowledge.
+Steps:
+1. Đăng nhập Root Admin HH-2C482676DD và mở Quản trị
+2. Chọn một ID đã từng đăng nhập, đổi role thành VIP, chọn gói Địa Lợi, bật hoạt động và đặt ngày hết hạn
+3. Bấm LƯU QUYỀN, làm mới danh sách và chọn lại ID đó
+Expected: Giao diện báo cập nhật thành công và danh sách giữ đúng role/gói/trạng thái/hạn dùng đã lưu; người không phải Admin không được gọi API quản trị.
+
+## Test 10 - Cấp Admin theo email
+Viewport: desktop
+Covers: email identity, admin email management, collaborator admin, authenticated email binding
+Description: Root Admin có thể tìm/cấp quyền bằng email đã xác thực; Kinrennie@gmail.com được tự nâng thành Admin sau khi đăng nhập.
+Steps:
+1. Đăng nhập tài khoản Google Kinrennie@gmail.com vào web ít nhất một lần
+2. Tải lại trang và kiểm tra thanh tài khoản cùng mục Quản trị
+3. Root Admin mở Quản trị, tìm tài khoản bằng email kinrennie@gmail.com
+Expected: Tài khoản kinrennie@gmail.com có role ADMIN, PREMIUM, không hết hạn và nhìn thấy Quản trị; form Admin chấp nhận cả email lẫn HH-ID.
+
+## Test 11 - Tổng Vận chỉ hiện cho VIP
+Viewport: desktop
+Covers: VIP-only Tổng Vận navigation, frontend entitlement, POST /api/total-fortune authorization
+Description: Free không nhìn thấy giao diện Tổng Vận; VIP/Admin mới có module và backend cũng chặn Free.
+Steps:
+1. Đăng nhập một tài khoản Free và kiểm tra menu
+2. Đăng nhập một tài khoản VIP đang hoạt động và kiểm tra menu Tổng Vận VIP
+3. Với VIP, mở Tổng Vận và nhập hồ sơ cùng tọa độ hợp lệ
+Expected: Free không thấy Tổng Vận VIP và không được backend cho tổng hợp; VIP/Admin thấy module Tổng Vận với form hồ sơ, tọa độ và nút tổng hợp ngày + tháng.
+
+## Test 12 - Tổng Vận không bịa khi thiếu engine
+Viewport: mobile
+Covers: multi-system synthesis guardrail, location input, missing-engine validation
+Description: Tổng Vận chỉ tổng hợp dữ liệu engine đã tính và báo thiếu thay vì tự tạo các phép tính.
+Steps:
+1. Đăng nhập VIP và mở Tổng Vận VIP trên mobile
+2. Nhập ngày giờ sinh, ngày xem và tọa độ hợp lệ nhưng chưa có dữ liệu engine đã tính
+3. Bấm TỔNG HỢP NGÀY + THÁNG
+Expected: Hiện thông báo chưa có dữ liệu engine đã tính và không sinh một bản luận giả.
+
+## Test 13 - Tổng Vận dùng DD/MM/YYYY và HH:mm
+Viewport: desktop
+Covers: Tổng Vận date format DD/MM/YYYY, 24-hour birth time HH:mm, no native locale date/time picker
+Description: Kiểm tra module Tổng Vận tuân thủ chuẩn ngày giờ chung của ứng dụng.
+Steps:
+1. Đăng nhập VIP/Admin và mở Tổng Vận VIP
+2. Nhập ngày sinh 03/12/2000 và giờ sinh 10:05
+3. Kiểm tra Ngày muốn xem và nhập một ngày theo DD/MM/YYYY
+Expected: Ngày sinh và Ngày muốn xem luôn hiển thị DD/MM/YYYY; Giờ sinh hiển thị HH:mm 24 giờ; không xuất hiện AM/PM hay định dạng ngày phụ thuộc trình duyệt.
+
+## Test 14 - Lưu hồ sơ và hiện kết quả ngay dưới form Tổng Vận
+Viewport: desktop
+Covers: Tổng Vận profile save, local profile persistence, separated action buttons, inline result placement
+Description: Người dùng có nút lưu hồ sơ rõ ràng và kết quả Tổng Vận xuất hiện ngay bên dưới khu nhập liệu thay vì chuyển sang trang khác.
+Steps:
+1. Đăng nhập VIP/Admin, nhập họ tên, ngày sinh, giờ sinh, nơi sinh và tọa độ rồi bấm LƯU HỒ SƠ
+2. Tải lại trang Tổng Vận và kiểm tra thông tin hồ sơ đã được điền lại
+3. Bấm TỔNG HỢP NGÀY + THÁNG khi đã có dữ liệu engine
+Expected: Ba nút LẤY TỌA ĐỘ HIỆN TẠI, LƯU HỒ SƠ và TỔNG HỢP NGÀY + THÁNG tách rời, hồ sơ được giữ sau reload, và kết quả được render ngay bên dưới form/action area.
